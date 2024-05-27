@@ -29,15 +29,15 @@ def SIR(Y, t, N, beta, alfa):
 
     return dS, dI, dR
 
-# Condiciones iniciales:
-N = 47000000
-I_0 = 10000
-R_0 = 0
-S_0 = N-I_0-R_0
-alfa = 0.02
-beta = 0.1
-Y_0 = S_0, I_0, R_0 
+# Condiciones iniciales, modificar al gusto:
+N = 47000000; I_0 = 10000; R_0 = 0
+alfa = 0.02; beta = 0.1
 
+# Restricción
+S_0 = N-I_0-R_0
+
+# Arreglos auxiliares
+Y_0 = S_0, I_0, R_0 
 t = np.linspace(0, 365, 365)
 
 # Soluciones del sistema:
@@ -65,8 +65,6 @@ plt.title('Plano S-I', size=20)
 plt.ylabel('Población suceptible normalizada', size=15)
 plt.xlabel('Población infectada  normalizada', size=15)
 plt.legend()
-
-
 
 # Se hace un array (.T sirve para sacar una traspuesta)
 S,I,R = s1.T   
