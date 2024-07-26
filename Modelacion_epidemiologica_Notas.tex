@@ -15,6 +15,10 @@
 \usepackage{ upgreek }
 \usepackage{tcolorbox}
 \tcbuselibrary{theorems}
+\newtcbtheorem[auto counter, number within = section]{theorems}{Teorema}%
+{colframe=gray!50!black,fonttitle=\bfseries}{}
+\theoremstyle{definition}
+\newtheorem{definition}{Definición}[section]
 \usepackage[pdftex]{hyperref}
 \addtolength{\hoffset}{-3.5cm}
 \addtolength{\textwidth}{7.2cm}
@@ -23,7 +27,7 @@
 \pagestyle{empty}
 
 
-\title{\textbf{Notas de Modelación Epidemiológica}}
+\title{\textbf{Notas de Modelación Epidémica}}
 
 \author{Lucho Cervantes Jorge Luis}
 
@@ -34,6 +38,7 @@
 
 \begin{multicols}{2}
 
+\tableofcontents
     \section{Introducción}
     
     \textbf{Epidemiología:} Estudio de una población respecto a su estado de salud. Para esto se definen clases epidemiológicas. La unión de estas clases es resulta en la población. \\ \newline \textbf{Estado de salud:} Según la OMS, estado de bienestar fisiológico, psicológico y social. \\ \newline Se tiene un enfoque en enfermedades causadas por patógenos como virus, bacterias, hongos, priones, etc.
@@ -253,7 +258,7 @@
    
    $$I_0=I(t=0)=\frac{k\zeta}{1+\zeta}\hspace{0.5cm}\Leftrightarrow\hspace{0.5cm} \zeta=\frac{I_0}{k-I_0}$$
    
-   \subsubsection{Caso sin remoción pero con tratamiento de recuperación}
+   \subsection{Caso sin remoción pero con tratamiento de recuperación}
 
    Inicialmente $\beta$ era la recuperación. Considerando una recuperación de la forma $\overline{\beta}=\beta/(1+I)$, se tiene entonces el sistema:
 
@@ -310,7 +315,7 @@
 
     \begin{equation}\label{eq:16}
     \begin{array}{cl}
-         \displaystyle{\frac{dx}{d\tau}}=& (1-x)-R_0xy \\ 
+         \displaystyle{\frac{dx}{d\tau}}=& \rho(1-x)-R_0xy \\ 
          \displaystyle{\frac{dy}{d\tau}}=& (R_0x-1)y 
     \end{array}  
     \end{equation}
@@ -328,14 +333,14 @@
 
     $$y=\frac{\rho\left(1-\frac{1}{R_0}\right)}{R_0\frac{1}{R_0}}=\rho\left(1-\frac{1}{R_0}\right)$$
 
-    Con lo que $\displaystyle{E_1=\left(\frac{1}{R_0}, \rho\left(1-\frac{1}{R_0}\right)\right)}$ es un punto de equilibrio. Si $R_0<1\hspace{0.5cm}\Rightarrow\hspace{0.5cm}\left(1-\frac{1}{R_0}\right)<0$ de manera que el punto no es fe asible o de interés biológico. Si $R_0=1$ entonces $E$ se encuentra sobre el eje de los susceptibles, con lo cual no hay infecciosos, por lo que no es un caso interesante. Si $R_0>1$ entonces $E \in (\mathbb{R_+}\times\mathbb{R_+})$ y si es de interés biológico. En este caso se conoce como equilibrio endémico.\\ \newline
+    Con lo que $\displaystyle{E=\left(\frac{1}{R_0}, \rho\left(1-\frac{1}{R_0}\right)\right)}$ es un punto de equilibrio. Si $R_0<1\hspace{0.5cm}\Rightarrow\hspace{0.5cm}\left(1-\frac{1}{R_0}\right)<0$ de manera que el punto no es fe asible o de interés biológico. Si $R_0=1$ entonces $E$ se encuentra sobre el eje de los susceptibles, con lo cual no hay infecciosos, por lo que no es un caso interesante. Si $R_0>1$ entonces $E \in (\mathbb{R_+}\times\mathbb{R_+})$ y si es de interés biológico. En este caso se conoce como equilibrio endémico.\\ \newline
     Considerando el cambio de la población infeciosa repecto al cambio de la población susceptible:
 
     $$\frac{dy}{dx}=\frac{R_0x-1}{(1-x)-R_0xy}=\frac{f(x,y)}{g(x,y)}$$
 
     Se tienen las cero-clinas $y=0, \displaystyle{y=\frac{\rho(1-x)}{R_0x}}$ y $\displaystyle{x=\frac{1}{R_0}}$. \\\newline
 
-    \textbf{Linealización y un análisis local de los puntos de equilibrio.}\\ \newline Para la  linealizar el sistema (\ref{eq:16}) se toman derivadas parciales respeto a $x $ y $y$. I.e. la matríz jacobiana es tal que 
+    \subsection{Linealización y un análisis local de los puntos de equilibrio.} Para la  linealizar el sistema (\ref{eq:16}) se toman derivadas parciales respeto a $x $ y $y$. I.e. la matríz jacobiana es tal que 
 
     $$J_{(X,Y)}=\left(\begin{array}{cc}
        -\rho-R_0y  & -R_0x \\
@@ -366,27 +371,321 @@
 
     con $tra(J_{E})<0$ y $\det(J_E)=R_0^2xy>0$. Esto implíca que $E$ es localmente asintóticamente estable. Haciendo un análisis similar al de $E_0$ se concluye que los valores propios del polinomio característico en este caso son:
 
-    $$\lambda_{1,2}=\rho R_0 \pm \frac{D}{2}\hspace{0.5cm} \textnormal{con} D=(\rho R_0)^2-4\rho(R_0-1)$$
+    $$\lambda_{1,2}=\rho R_0 \pm \frac{\sqrt{D}}{2}\hspace{0.5cm}  D=(\rho R_0)^2-4\rho(R_0-1)$$
 
     En este caso, $D>0$ implica que $E$ es un nodo y $D<0$ que es una fuente.
+
+    \subsection{Estabilidad Global}
+
+    \begin{theorems}{}{t1}
+        Si $R_0<1$ entonces $E_0$ es globalmente asintóticamente estable.
+    \end{theorems}
+
+    \textbf{Demostración:} Como en $x(0)>1\Rightarrow\displaystyle{\frac{dx(\tau)}{d \tau}<0}$ Entonces $x(\tau)$ es decreciente si $x>1$. Suponiendo que $\exists\hspace{0.3cm} \tau_0>0$ tal que $x(\tau_0)=1$ entonces $\left.\frac{dx(\tau)}{d \tau}\right\vert _{\tau_0}<1$ y $x(\tau)\leq1 \hspace{0.3cm}\forall \tau\geq \tau_0$, Si $x(0)\leq$ se toma $\tau_0=0$ entonces $\frac{dy(\tau)}{d\tau}=(R_0x-1)y(\tau)$ es tal que para $\tau\geq\tau_0$ se tienen que $\frac{dy(\tau)}{d\tau}\leq(R_0-1)y(\tau)$. Integrando esto se tiene:
+
+    $$y(\tau)=y(\tau_0)e^{(R_0-1)(\tau-\tau_0)}.$$ 
+
+    Como $R_0<1$ entonces $\displaystyle{\lim_{\tau \to \infty}}y(\tau)=0$.\\ \newline Por otro lado, sabemos que $\lim_{\tau\to \infty}^{Sup} x\leq1$. Haciendo un tratamiento análogo al de $y(\tau)$ se llega a que:
+    
+    \begin{equation}\label{eq:17}
+    x(\tau)\leq e^{-\rho\tau}x(0)+\rho\int_0^{\tau}e^{-\rho(\tau-S)dS}.
+    \end{equation}
+
+    Como $\displaystyle{\lim_{\tau \to \infty}}y(\tau)=0$ entonces $\forall\varepsilon>0\hspace{0.3cm}\exists$ $\tau_0>0$ t.q. $y\leq\varepsilon$ para $\tau>\tau_0$ Tomando esos valores de $\tau$:
+
+    $$\frac{dx\tau}{d\tau}\geq \rho(1-x)-\varepsilon R_0x(\tau)$$
+
+    que aunado a la desigualdad (\ref{eq:17})
+
+    $$x(\tau)\geq e^{-(\rho+\varepsilon R_0)\tau}x(0)+\rho\int_0^{\tau}e^{-(\rho+\varepsilon R_0) (\tau-S)}dS$$
+
+    con lo cual $\lim_{\tau\to\infty}^{Inf}x\geq\frac{\rho}{\rho+\varepsilon R_0}$ $\forall\varepsilon>0$, es decir  $\lim_{\tau\to\infty}^{Inf}x\geq1$. Por tanto $\lim_{\tau\to\infty}x=1$. Con lo cual $E_0$ es un punto globalmente asintóticamente estable.
+
+    \subsubsection{Paréntesis (resultados necesarios)}
+
+    Sea $u(t)=(x(t), y(t))$ una curva parametrizada con la condición inicial $U_0=(x(0),y(0))$.   
+
+    \begin{definition}[Conjunto $\omega$- límite de $u_0$]
+        Es el conjunto de todos los puntos $a\in \mathbb{R}^2$ para los cuales $\exists$  $(t_j)$ t.q. $u(t_j)\to a$ cuando $t_j\to \infty$. Se denota por $\omega(u_0)$.
+    \end{definition}
+
+    \begin{definition}[Órbita  homoclínica]
+        Es la trayectoría del flujo de un sistema dinámico que une a un punto silla con consigo mismo.
+    \end{definition}
+    
+    \begin{definition}[Órbita  heteroclínica]
+        Curva en el plano fase que une dos puntos de equilibrio diferentes.
+    \end{definition}
+    
+    \begin{definition}[Separatríz]
+        Curva en el plano fase que toca un equilibrio hiperbólico o conecta una variedad estable con una inestable de un par de puntos de equilibrio.
+    \end{definition}
+    
+    \begin{definition}[Ciclo separatriz]
+        Unión finita de puntos de quilibrio $P_j$ con $j=1,...,m$ y separatrices $\Gamma_j$ t.q. el flujo sobre $\Gamma_j$ va de $P_j$ a $P_{j+1}$ y $P_{m+1}=P_1$ .
+    \end{definition}
+
+    \begin{definition}[Ciclo separatríz compuesto]
+        Unión finita de ciclos separatrices compatibles en orientación ~\cite{Mod:epid}.
+    \end{definition}
+
+    \begin{theorems}{Teorema de Poincaré-Bendixson}{t2}
+        Sea $X\subseteq\mathbb{R}^2$ un abierto que contiene una cantidad finita de puntos de equilibrio, y sea $u(t)$ una solución en $X$ acotada y no negativa t.q. $\omega(u_0)\subseteq X$. Entonces, $\omega(u_0)$ es un punto de equilibrio $\lor$ $\omega(u_0)$ es una órbita periódica, $\lor$ $\omega(u_0)$ es un ciclo separatríz compuesto.   
+    \end{theorems}
+
+    La prueba de este teorema corresponde a un curso de ecuaciones difrenciales, pero puede encontrarse en ~\cite{PBteorema}.
+
+    \begin{theorems}{Criterio de Dulac-Bendixson}{t3}
+        Sea $Z\subseteq X $ un abierto simplemente conexo. Sean $\dot x=f$ y $\dot y=g$ de clase $\mathcal{C}^{1}$ en $Z$. Suponiendo que $\exists\hspace{0.3cm}D: Z\longrightarrow\mathbb{R}$ clase $\mathcal{C}^{1}$ en $Z$ t.q. $\partial_x(Df)+\partial_y(Dg)\leq 0$ (ó $\geq0$) en un conjunto de medida cero en $Z$. Entonces, $Z$ no tiene órbitas periódicas ni ciclos separatrices compuestos. \\ \newline A $D$ se le conoce como función de Dulac. 
+    \end{theorems}
+
+    La prueba de este teorema puede encontrarse en ~\cite{dulacben}, \\ \newline Considerando el sistema reducido y adimensionalizado (\ref{eq:16}) Se tienen los siguientes resultados:
+
+    \begin{theorems}{}{t4}
+        Si $R_0$>1, entonces el sistema (\ref{eq:16}) no tiene órbitas periódicas ni ciclos separatrices.  
+    \end{theorems}
+
+    \textbf{Demostración:} Considerando $f(x,y)=\dot x$ y $g(x,y)=\dot y$ y $Z=(0,\infty)\times(0,\infty)$, y $D\equiv 1$ se tiene que
+
+    $$\partial_x(Df)+\partial_x(Dg)=\partial_xf+\partial_xg=-\rho-R_0y+R_0x-1$$
+
+    Esto nos sugiere proponer $D(x,y)=\displaystyle{\frac{1}{y}}$ que es $\mathcal{C}^{1}$ en $(0,\infty)\times(0,\infty)$. Así
+
+    $$\partial_x(Df)+\partial_x(Dg)=-\frac{\rho}{y}-R_0<0$$
+
+    De modo que, por el criterio de Dulac-Bendixson (\ref{eq:16}) se concluye lo deseado.
+
+    \begin{theorems}{}{t5}
+        Si $R_0$>1 y $I(0)$, entonces el punto de equilibrio $E$, del sistema (\ref{eq:16}), es globalmente estable.  
+    \end{theorems}
+
+    \textbf{Demostración:} Tomando $\hat{\rho}=\min\{\rho,1\}$ entonces
+    
+    $$\dot x + \dot y\leq \rho-\hat{\rho}(x+y)$$
+    $$(x+y)\leq\kappa e^{-\hat{\rho}}+\frac{\rho}{\hat{\rho}}\left(1-e^{-\hat{\rho t}}\right)$$
+
+    con $\kappa$ la condición inicial de $x+y$ y $\displaystyle{\lim_{t\to \infty} Sup \{x+y\}\leq \frac{\rho}{\hat{\rho}}}$. Esto implica que las suluciones de (\ref{eq:16}) son acotadas. Ahora, como en $(0,\infty)\times(0,\infty)$ es 
+
+    \section{Ecología de poblaciones que interactúan}
+
+    \subsection{Modelo de Lotka-Volterra}
+
+    Modelo que simula como se relacionan dos poblaciones, una de presas, $x_1$, y otra de depredadores $x_2$.
+
+     \begin{equation}\label{eq:18}
+         \tcboxmath[colback=white,colframe=gray, title=Modelo Ross-MacDonald]{\begin{array}{ccc}
+            \dot x_1 =& \alpha x_1-\beta x_1 x_2   \\
+            \dot x_2 =&  \delta x_1x_2-\gamma x_2           
+        \end{array}} 
+    \end{equation}
+
+    En particular, su matriz jacobiana (obtenida al linealizar), es:
+
+    $$J=\left(\begin{array}{cc}
+       \alpha-\beta x_2  & -\beta x_1 \\
+        \delta x_2 & \delta x _1-\sigma
+    \end{array}\right)$$
+
+    Este modelo se puede generalizar de la siguiente forma:
+    
+     \begin{equation}\label{eq:19}
+         \tcboxmath[colback=white,colframe=gray, title=Modelo Ross-MacDonald]{\begin{array}{ccc}
+            \dot x_1 =&\displaystyle{ r_1x_1\left(1-\frac{x_1}{k_1}\right) + a_{12}x_1x_2 }\\ \\
+            \dot x_2 =&  \underbrace{r_2x_2\left(1-\frac{x_2}{k_2}\right)}_{\textnormal{comp logístico}} + a_{21}x_1x_2          
+        \end{array}} 
+    \end{equation}
+
+    Desarrollando el sistema (\ref{eq:19}) y  definiendo $a_{11}=\frac{r_1}{k_1}$ y $a_{22}=\frac{r_2}{k_2}$ se puede reescribir de forma matricial como
+
+    \begin{equation}\label{eq:20}
+        \frac{d\overline{X}}{dt} = \overline{R}^t\hspace{0.1cm}\overline{X}+\overline{X}^{T}M\overline{X} 
+    \end{equation}
+
+    donde $\overline{X}^t=(x_1,x_2)$, $\overline{R}^t=(r_1,r_2 )$ y $M=\left(\begin{array}{cc}
+       a_{11} & a_{12} \\
+       a_{21} & a_{22}
+    \end{array}\right)$.
+    
+    A $M$ se le conoce como matriz ecológica; a sus elementos $a_ii$ como los términos de interacción intraespecífica y a sus elementos $a_{ij}$ con $i\neq j$ cmo sus términos de interacción interespecífica. La ventaja de la ecuación (\ref{eq:20}) es que generaliza el modelo de Lotka-Volterra a la interacción de más de dos especies. \\\newline  En general, si 
+
+    \begin{equation}\label{eq:21}
+    \begin{array}{c}
+        \dot x_1 = f_1(t_1, x_1,...x_n)  \\
+        \dot x_2 = f_2(t_1, x_1,...x_n)  \\
+             \vdots  \\
+        \dot x_3 = f_3(t_1, x_1,...x_n) 
+    \end{array} \hspace{0.1cm}\equiv\hspace{0.1cm} \frac{d \overline{X}}{dt}=F(t,\overline{X})= (f_1,...,f_n)
+    \end{equation}
+
+
+    Para conocer el comportamiento su comportamiento linealizado se tiene que obtener la matriz jacobiana de $F$. En el contexto ecológico, si el sistema anterior representa la interacción de $n$ especies que interactúan entre si entonces se tendrá que $M=DF_p=(\frac{\partial f_i}{\partial x_j})_{ij}$ es la jacobiana del sistema. En tal caso se tiene la siguiente\\ \newline\textbf{Definición:} El sistema (\ref{eq:21}) es cooperativo si $0\leq\frac{\partial f_i}{\partial x_j} \forall i\neq j$  y es competitivo si $\frac{\partial f_i}{\partial x_j}\leq 0 \forall i\neq j$.\\ \newline\textbf{Definición:} Un sistema que es cooperativo o competitivo es llamado monótono. Son requeridos los siguientes resultados
+
+    \begin{theorems}{}{}
+       Toda solución acotada de un sistema monótono en $\mathbb{R}^2$ tiende a un punto en equilibrio
+\end{theorems}
+    
+    \begin{theorems}{}{}
+       Sea un sistema monótono y $D\subseteq\mathbb{R}^3$ convexo y compacto que no contiene puntos de equilibrio, entonces, toda solución que existe y permanece en $D$ para $0\leq t$ o es periódica, o tiende en espiral a una solución periódica cuando $0\leq t$.
+    \end{theorems}
+
+    Los sistemas monótonos se pueden generalizar tomando los conjuntos $$k_m=\{\overline{X}\in \mathbb{R}^n|(-1)^{m_i}x_i\geq 0, 1\leq i\leq n\}$$ con $m=(m_1,...,m_n);$ $m_i\in \{0,1\}$ Los cuales son conjuntos que generan el orden parcial $\leq_m$ dado por : $$ \overline{X}\leq_m\overline{Y}\Leftrightarrow \overline{Y}-\overline{X}\in K_m$$
+
+    \textbf{Definición:} El sistema \ref{eq:21} es $k_m$ cooperativo si $\exists$ si existe una matriz diagonal $H=diag\left((-1)^{m_i}\right)$ con $m_i\in \{0,1\}$ e $i \in \{1,...,n\}$ tal que todos los elemnetos fuera de la diagonal de $H^{-1}DF_{\overline{X}}H$ son no negativos i.e. $$(-1)^{m_1+m_j}\frac{\partial f_i}{\partial x_i}(\overline{X})\geq0$$ y es $k_m$ competitivo si $$(-1)^{m_1+m_j}\frac{\partial f_i}{\partial x_i}(\overline{X})\leq0$$ En particular, un sistema $k_m$ monótono preserva el orden parcial $\leq_m$
+
+    
+    \subsection{Transmisión vectorial (Modelo Ross-MacDonald)}
+
+    Sirve para modelar enfermedades como la malaria, la cual es trasmitida por el mosquito anopheles. A su vez, un mosquito sano se infecta cuando pica a un humano infectado. Si $N$ es la población de humanos y $V$ es la de mosquitos, ambas constantes (se descarta la demografía) y $X$, $Y$ son las poblaciones infecciosas de humanos y mosquitos respectivamente, entonces, la población susceptible de humanos es $N-X$ y la de mosquitos es $V-Y$. \\ \newline Como no se sabe cuando alguien es picado por un mosquito infeccioso, el parámetro que indica la velocidad de transmisión es el número de picaduras promedio que un mosquito hace por día, $b$. Así, las picaduras por persona en un día es $\frac{bV}{N}$, $\Rightarrow$ las picaduras que recibe por mosquitos infecciosos es $\frac{bV}{N}\frac{Y(t)}{V}=\frac{bY(t)}{N}$, $\Rightarrow$ las personas susceptibles picadas por mosquitos infecciosos es $\frac{bY(t)}{N}(N-X(t))$. Si $\alpha$ es la fracción de picaduras de mosquitos infecciosos que son efectivas (efectividad de transmisión) entonces $\frac{\alpha bY(t)}{N}(N-X(t))$ son las personas susceptibles que se infectan.\\ \newline En el caso de los mosquitos, la fracción del promedio de picaduras que son a personas infectadas, por mosquito es $\frac{bX(t)}{N}$ $\Rightarrow$ la población de mosquitos que pica a alguien infectado es $\frac{bX(t)}{N}(V-Y(t))$ $\Rightarrow$ la población de mosquitos que se infecta es $\frac{\delta bX(t)}{N}(V-Y(t))$. \\ \newline
+    Considerando que los humanos se recuperan (vuelven a ser susceptibles) a una tasa $\mu$ proporcional al número de infectados. En el caso de los mosquitos, se supone que estos viven poco, de manera que si uno es infectado, este morirá infectado, por lo que solo interesa la tasa de mortalidad $\nu$ en general. \\ \newline Definiendo $m=\frac{V}{N}$ y normalizando el sistema (tomando $x=\frac{X}{N}$ y $y=\frac{Y}{v}$), el sistema de ecuaciones diferenciales está dado por:
+
+    \begin{equation}\label{eq:22}
+         \tcboxmath[colback=white,colframe=gray, title=Modelo Ross-MacDonald]{\begin{array}{ccc}
+            \dot x =& \alpha bm y(1-x)-\mu x  \\
+            \dot y =&  \delta b x(1-y)-\nu y           
+        \end{array}} 
+    \end{equation}
+
+    Pensándolo como un sistema de la forma $\frac{d\overline{X}}{dt}=F(x,y,t)$ se tiene que la matriz jacobiana del sistema es:
+    
+    $$J=DF_{\overline{x}}=\left(\begin{array}{cc}
+        -\alpha bmy-\mu & \alpha bm(1-x) \\
+         \delta b(1-y)  & -\delta bx-\nu
+    \end{array}\right)$$
+
+    Por otro lado, sus puntos de equilibrio:
+
+    $$\begin{array}{rl}
+         0=&\alpha bm y(1-x)-\mu x \\
+         0=&\delta b x(1-y)-\nu y
+    \end{array} \Leftrightarrow \begin{array}{rl}
+        x=& \displaystyle{\frac{\nu y}{\delta b(1-y)}} \\
+        y=& \displaystyle{\frac{\mu x}{\alpha bm(1-x)}}
+    \end{array}$$
+
+    sustituyendo el valor de $y$ en la expresión de $x$ se tiene que 
+    
+    $$x=\frac{\mu\nu x}{\delta b^2\alpha m(1-x)-\mu x}$$
+    
+    Nos interesan los equilibrios no triviales, por lo que suponemos $x_p,y_p\neq0$. Así, se resuelve para $x_p$ como 
+    
+    $$x_p=\frac{\alpha b^2\delta m -\nu\mu}{\delta b(\alpha bm+\mu)}$$
+    
+    con lo cual $y_p=\displaystyle{\frac{\mu x_p}{\alpha bm(1-x_p)}}$.\\ \newline Ahora, $E_p=(x_p,y_p)\subseteq D \Leftrightarrow 0< x_p,y_p< 1$. En efecto, 
+
+    $$x_p=\underbrace{\frac{\alpha b^2\delta m}{\delta b(\alpha bm+\mu)}}_{=\frac{\alpha bm}{\alpha bm+\mu}<1}-\underbrace{\frac{\nu\mu}{\delta b(\alpha bm+\mu)}}_{>0}<1$$
+
+    por otro lado:
+
+    $$x_p=\frac{\alpha b m}{\alpha bm+\mu}-\frac{\nu\mu}{\delta b(\alpha bm+\mu)}<\frac{\alpha b m}{\alpha bm+\mu}$$
+
+    $$\Leftrightarrow\hspace{0.3cm} (\alpha bm+\mu)x_p<\alpha bm$$
+    $$\Leftrightarrow\hspace{0.3cm} y_p=\frac{\mu x_p}{\alpha bm(1-x_p)}<1$$
+
+    Por lo que se satisfacen las condiciones del teorema 4.2. En particular, consideraremos $R_0^2=S_0=\frac{\alpha b^2\delta m}{\nu\mu}$. \\\newline
+    Para el análisis local:
+
+    $$J_{E_p}=\left(\begin{array}{cc}
+        -\mu & \alpha bm \\
+        \delta b & -\nu
+    \end{array}\right); \hspace{0.5cm} p(\lambda)=\lambda^2+(\mu+\nu)\lambda+(\nu\mu-\alpha\delta b^2m)$$
+
+    Para $S_0<1$ las raíces del polinomio característico, $\lambda_1, \lambda_2$ tienen parte real negativa y las soluciones tienden (por el teorema 4.2) a $E_0=(0,0)$. Para $S_0>1$ $Re(\lambda_i)>0$ para alguna $i$, por lo que $E_p$ es un punto silla y las soluciones tienden a $E_p$.
+
+    Si $R_0=1$ entonces se tiene la población crítica de mosquitos $$V_c=\frac{\nu\mu N}{\alpha\delta b^2}$$ La cual determina si se da un brote infeccioso. 
+
+    
+    \subsection{Modelo SEIR}
+
+      \begin{center}
+       \vspace{0.5cm}
+       \hspace{0.6cm}\xymatrix{\ar[r]^{\Lambda}&*+<0.6cm>[F]{S} \ar[r]^{\alpha \frac{SI}{N}}+\ar[d]^{\mu} & *+<0.6cm>[F]{E} \ar[r]^{\sigma } +\ar[d]^{\mu}&*+<0.6cm>[F]{I} \ar[r]^{\beta } +\ar[d]^{\mu}&*+<0.6cm>[F]{R} \ar[d]^{\mu}\\&&&&}
+       \vspace{0.5cm}
+    \end{center}
+
+    con $$N=S+I+E+R \hspace{0.2cm}\Leftrightarrow\hspace{0.2cm} R=N-S-I-E$$
+    Cosiderando una población constante ($\mu=\nu$), al normalizar ($s=\frac{S}{N}$, $i=\frac{I}{N}$, $e=\frac{E}{N}$ y $r=\frac{R}{N}$ ) se tiene el sistema de ecuaciones:
+
+    \begin{equation}\label{eq:23}
+         \tcboxmath[colback=white,colframe=gray, title=Modelo Ross-MacDonald]{\begin{array}{ccc}
+            \dot s =& \mu -\alpha si -\mu s  \\
+            \dot e =& \alpha si -\sigma e -\mu e \\
+            \dot i =& \sigma e -\beta i  -\mu i \\
+            \dot r =& \beta i  -\mu r \\        
+        \end{array}} 
+    \end{equation}
+
+    De manera análoga a la ecuación (\ref{eq:15}) se tiene que $\dot N=\Lambda-\mu N$, pero al ser $\Lambda=\mu$, se tiene que: $$\dot N=\mu(1-N).$$ Como $r=1-s-i-e$, la ecuacion correspondiente es redundante por lo que nos quedamos con el sistema sei. Este puede reescribirse como:
+
+    $$\begin{array}{rl}
+         \dot s=& -\alpha si-\mu(1-s)  \\
+         \dot e =& \alpha si -(\mu+\sigma)e  \\
+         \dot i=&\sigma e -(\mu+\beta)i   
+    \end{array}$$
+
+    Con el dominio $D_1=\{(s,e,i) \in \mathbb{R}^3_+\hspace{0.1cm}|\hspace{0.1cm}s+e+i\leq1\}$. En particular en $\partial D_1=\{(s,e,i) \in \mathbb{R}^3_+\hspace{0.1cm}|\hspace{0.1cm}s+e+i=1\}$ el campo vectorial apunta hacia el interior de $D_1$. Esto implica, por el principio de invariancia de Lasalle, que las soluciones permanecen dentro de $D_1.$\\ \newline Por otro lado, la jacobiana del sistema es:
+
+    $$J_{(s,e,i)}\left(\begin{array}{ccc}
+        \mu-\alpha i &0 &-\alpha s \\
+        \alpha i & -(\mu+\sigma)&\alpha s \\
+         0&\sigma &-(\mu+\beta)
+    \end{array}\right)$$
+
+    Proponiendo $H=\displaystyle{\left(\begin{array}{ccc}
+         1& 0 &0\\
+         0& -1 &0\\
+         0& 0 & 1
+    \end{array}\right)}$
+    
+    Se tiene el cono $k_m=\{(s,e,i)|s\geq, e\leq, i\geq \}$ por lo que el sistema es $k_m$ cooperativo. \\\newline De acuerdo con los teoremas 4.1 y 4.2 las soluciones del sistema tienden a puntos de equilibrio o a soluciones periódicas. \\ Para encontrar los puntos de equilibrio se toma 
+
+    $$\begin{array}{rl}
+        \mu -\mu s-\alpha si &=0  \\
+         \alpha si -(\mu+\sigma)e&=0  \\
+        \sigma e -(\mu+\beta)i &=0 
+    \end{array}$$
+
+    En el equilibrio libre de enfermedad ($i\equiv 0$, $e\equiv0$): 
+
+    $$\mu=\mu s \Rightarrow s\equiv 1$$ Por lo que se tiene el punto de equilibrio $E_0=(1,0,0)$. \\ \newline Suponiendo que $s,e,i \neq0$ y considerando que en este caso $R_0=\displaystyle{\frac{\alpha\sigma}{(\sigma+\mu)(\beta+\mu)}}$ Despues de toda el álgebra se obtiene el punto de equilibrio: 
+    
+    $$E_1=(s^
+    *, e^{*}, i^*)=\left(\frac{1}{R_0},\frac{(\beta+\mu)i^*}{(\sigma+\mu)(\beta*\mu)},\frac{\mu\sigma(R_0-1)}{(\sigma+\mu)(\beta+\mu)R_0}\right)$$
+
+    El cual es de interés biológico solo cuando $R_0>1$. Para la estabilidad de $E_0$ se tiene la matriz jacobianas:
+
+    $$J_{E_0}=\left(\begin{array}{ccc}
+       -\mu  & 0 & -\alpha\\
+        0 & -(\sigma+\mu) &\alpha \\
+        0 & \sigma & -(\beta+\mu)
+    \end{array}\right)$$
+    
+    y su correspondiente polinomio característico: 
+    $$p(\lambda)=\lambda^2+(2\mu+\sigma+\beta)\lambda+(\sigma+\mu)(\beta+\mu)-\alpha\sigma$$
+
+    El cual tiene ambas raíces negativas si y solo si $R_0<1$, de este modo $E_0$ es estable. \\\newline En el caso de $E_1$, se tiene el polinomio característico:
+
+    $$p(\lambda)=\lambda^3+a_1\lambda^2+a_2\lambda+a_3\hspace{0.2cm} \textnormal{con:}$$
+
+    $$\begin{array}{cc}
+         a_1=&2\mu+\sigma+\beta  \\
+         a_2=&\mu(a_1)R_0  \\
+         a_3=&\sigma\mu\alpha\displaystyle{\left(\frac{R_0-1}{R_0}\right)} 
+    \end{array}$$
+
+    donde se satisface que $a_i>0$ $\forall i$ y $a_1a_2>a_3$. Así, por el criterio de Routh Hurwitz, $E_1$ es localmente estable (nuevamente reiterando que $R_0>1$).
+    
     
 
     
-
     
-
     
-
-
-
-    
-
-   
 \end{multicols}
-    
+   
 
     
-
+\bibliographystyle{ieeetr}
+\addcontentsline{toc}{chapter}{Bibliografía}
+\bibliography{biblio.bib}
 
 
 
